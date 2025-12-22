@@ -1,0 +1,262 @@
+name: ezhrm
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 2.8.8+118
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_image_compress: ^2.4.0
+  flutter_animate: ^4.5.2
+  flutter_bloc: ^9.0.0
+  bloc:
+  provider: ^6.1.5
+  image: ^4.3.0
+  image_picker: ^1.1.2
+  path_provider: ^2.1.5
+  path: ^1.9.0
+  math_expressions: ^2.6.0
+  cached_network_image: ^3.4.1
+  expressions: ^0.2.5+2
+  url_launcher: ^6.3.1
+  http: ^1.2.2
+  fl_chart: ^0.70.1
+  pdf: ^3.11.1
+  csv: ^5.0.0
+  excel: ^2.0.4
+  equatable: ^2.0.7
+  permission_handler: ^11.4.0
+  file_picker: ^10.1.7
+  intl: ^0.19.0
+  flutter_secure_storage: ^9.2.4
+  dio: ^5.7.0
+  flutter_staggered_animations: ^1.1.1
+  cloud_firestore: ^5.6.3
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.4.2
+  firebase_storage: ^12.4.4
+  firebase_messaging: ^15.2.4
+  html: ^0.15.5
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
+  camera: ^0.11.1
+  percent_indicator: ^4.2.2
+  google_maps_flutter: ^2.10.1
+  location: ^8.0.0
+  google_fonts: ^6.2.1
+  table_calendar: ^3.1.3
+  flutter_exif_rotation: ^0.5.2
+  flutter_local_notifications: ^18.0.1
+  bloc_test: ^10.0.0
+  build_runner: ^2.4.15
+  get_it: ^8.0.3
+  shimmer: ^3.0.0
+  geolocator: ^13.0.4
+  pie_chart: ^5.4.0
+  image_cropper: ^11.0.0
+  timeago: ^3.7.0
+  flutter_pdfview: ^1.4.0+1
+  flutter_cache_manager: ^3.4.1
+  open_file: ^3.5.10
+  shared_preferences: ^2.5.3
+  workmanager: ^0.6.0
+  uuid: ^4.5.1
+  flutter_html: ^3.0.0
+  webview_flutter: ^4.13.0
+  firebase_analytics: ^11.5.2
+  dotted_border: ^2.0.0
+  flutter_staggered_grid_view: ^0.7.0
+  geocoding: ^2.1.1
+  share_plus: ^7.2.1
+  flutter_dash: ^1.0.0
+  dotted_line: ^3.1.0
+  font_awesome_flutter: ^10.7.0
+  device_info_plus: ^11.5.0
+  tflite_flutter: ^0.11.0
+  google_mlkit_face_detection: ^0.13.1
+  google_sign_in: ^6.3.0
+  logger: ^2.6.1
+  get: ^4.6.5
+  timer_count_down: ^2.2.2
+  colorful_circular_progress_indicator: ^0.0.2
+  dropdown_plus: ^0.0.9
+  quickalert: ^1.0.1
+  syncfusion_flutter_charts: ^20.4.54
+  salomon_bottom_bar: ^3.3.1
+  in_app_update: ^4.1.4
+  change_app_package_name: ^1.1.0
+  another_flushbar: ^1.12.30
+  fluttertoast: ^8.2.12
+  loading_animation_widget: ^1.2.0+4
+  screenshot: ^3.0.0
+  flip_card: ^0.7.0
+  flutter_snake_navigationbar: ^0.6.1
+  web_socket_channel: ^2.4.0
+  flutter_animated_dialog: ^2.0.1
+  circular_countdown: ^2.1.0
+  otp_text_field: ^1.1.3
+  flutter_spinkit: ^5.2.0
+  carousel_slider: ^5.1.1
+  flutter_svg: ^2.0.9
+  sign_in_with_apple: ^7.0.1
+  flutter_signin_button: ^2.0.0
+  multi_image_picker_plus: ^0.0.7
+  webview_flutter_plus: ^0.4.7
+  flutter_background: ^1.3.0+1
+  minimize_flutter_app: ^0.0.2
+  flutter_html_to_pdf_plus: ^0.3.0
+  package_info_plus: ^8.3.1
+  flutter_plugin_android_lifecycle: ^2.0.20
+  sqflite: ^2.4.2
+  url_launcher_android: ^6.3.18
+  flutter_jailbreak_detection_plus: ^1.10.7
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/images/ezhrm_logo.png
+    - assets/images/user.png
+    - assets/images/mail.png
+    - assets/images/password.png
+    - assets/images/google.png
+    - assets/images/ezhrm_logo.png
+    - assets/images/call.png
+    - assets/images/profile_holder.png
+    - assets/images/apply_leave.png
+    - assets/images/assessment.png
+    - assets/images/attendance_history.png
+    - assets/images/check_in.png
+    - assets/images/check_out.png
+    - assets/images/company_logo.png
+    - assets/images/good_morning.png
+    - assets/images/holiday_list.png
+    - assets/images/marked_attendance.png
+    - assets/images/request_attendance.png
+    - assets/images/leave_status.png
+    - assets/images/plant.png
+    - assets/images/request.png
+    - assets/images/edit_icon.png
+    - assets/images/question.png
+    - assets/images/document.png
+    - assets/images/workfromhome.png
+    - assets/images/jpgicon.png
+    - assets/images/pdficon.png
+    - assets/images/compoff.png
+    - assets/images/ReqPastAttendance.png
+    - assets/images/reimbursement.png
+    - assets/images/contactUsCompanyLogo.png
+    - assets/images/salaryslip.png
+    - assets/images/applyloan.png
+    - assets/images/todo.png
+    - assets/images/ezhrmlogo.png
+    - assets/images/telephone.png
+    - assets/images/feedback.png
+    - assets/modals/mobile_face_net.tflite
+    - assets/images/pdf_icon.png
+    - assets/images/eye_icon.png
+    - assets/images/home_Vector.png
+    - assets/images/logout_Vector.png
+    - assets/images/notification_Vector.png
+    - assets/images/profile_Vector.png
+    - assets/images/bell_vector.png
+    - assets/images/success.png
+    - assets/images/ezhrm_splash_logo.png
+    - assets/images/calender.png
+    - assets/images/employee.png
+    - assets/images/reporting.png
+    - assets/images/time.png
+    - assets/images/goodMorning.png
+    - assets/images/goodEvening.png
+    - assets/images/goodAfternoon.png
+    - assets/images/Graphics.png
+    - assets/ezlogo.png
+    - assets/30days.png
+    - assets/img.png
+    - assets/image_pic.jpg
+    - assets/uploaddd.png
+    - assets/fwd.png
+    - assets/cardb.png
+    - assets/emppp.png
+
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Black.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins-Thin.ttf
+        - asset: assets/fonts/Poppins-Light.ttf
+
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
