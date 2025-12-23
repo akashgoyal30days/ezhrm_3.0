@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:ezhrm/Premium/reimbursement/screen/reinbursement_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,6 +122,7 @@ class _ReimbursementHistoryScreenState
           ],
           child: Scaffold(
             backgroundColor: Colors.white,
+            bottomNavigationBar: bottomBarIos(),
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: const Text(

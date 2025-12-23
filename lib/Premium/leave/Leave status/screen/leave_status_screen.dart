@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // 'http' import is unused, so it can be removed.
@@ -134,6 +135,7 @@ class _LeaveStatusScreenState extends State<LeaveStatusScreen> {
       child: RefreshIndicator(
           onRefresh: _onRefresh,
           child: Scaffold(
+            bottomNavigationBar: bottomBarIos(),
               backgroundColor: Colors.white, // Set a white background
               appBar: AppBar(
                 title: const Text("Leave Status",

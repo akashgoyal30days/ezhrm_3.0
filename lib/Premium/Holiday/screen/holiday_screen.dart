@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -135,6 +136,7 @@ class _HolidayListScreenState extends State<HolidayListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: bottomBarIos(),
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: const Text(

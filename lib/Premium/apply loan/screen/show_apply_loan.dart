@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -129,6 +130,7 @@ class _ShowApplyLoanScreenState extends State<ShowApplyLoanScreen> {
       child: Theme(
         data: getApplyLoanTheme(),
         child: Scaffold(
+          bottomNavigationBar: bottomBarIos(),
           backgroundColor: ApplyLoanColors.backgroundColor, // 60% white
           appBar: AppBar(
             leading: Builder(

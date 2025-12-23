@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,7 @@ class _AssignWorkScreenState extends State<AssignWorkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bottomBarIos(),
       appBar: AppBar(
         title: const Text('Assigned Work',
             style: TextStyle(

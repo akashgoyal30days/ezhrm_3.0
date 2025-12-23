@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -249,6 +250,7 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
     final boxHeight = boxWidth * 1.9; // Maintain a good aspect ratio
 
     return Scaffold(
+      bottomNavigationBar: bottomBarIos(),
       appBar: AppBar(
         title: const Text(
           "Add more Images",

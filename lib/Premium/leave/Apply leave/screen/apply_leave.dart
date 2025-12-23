@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -556,6 +557,7 @@ class _ApplyLeavePageState extends State<ApplyLeavePage> {
           ],
           elevation: isSmallScreen ? 0 : 1,
         ),
+        bottomNavigationBar: bottomBarIos(),
         drawer: const CustomSidebar(),
         body: SafeArea(
           child: LayoutBuilder(

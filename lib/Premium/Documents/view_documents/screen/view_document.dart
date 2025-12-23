@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart'; // Flutter material design components
 import 'package:flutter_bloc/flutter_bloc.dart'; // BLoC for state management
 import 'package:dio/dio.dart'; // HTTP client for downloading files
@@ -118,6 +119,7 @@ class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
       ],
       // Build the Scaffold widget
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         backgroundColor: const Color(0xFFF9F9F9), // Light gray background
         appBar: AppBar(
           elevation: 0, // No shadow

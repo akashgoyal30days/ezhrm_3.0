@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -201,6 +202,7 @@ class _PostCsrActivityScreenState extends State<PostCsrActivityScreen> {
       },
       builder: (context, state) {
         return Scaffold(
+          bottomNavigationBar: bottomBarIos(),
           appBar: AppBar(
             title: const Text("Post CSR Activity",
                 style: TextStyle(

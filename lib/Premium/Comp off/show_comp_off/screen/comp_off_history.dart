@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Configuration/premium_bottom_bar_ios.dart';
 import '../../../dashboard/location_service.dart';
 import '../../../dashboard/screen/dashboard.dart';
 import '../../add comp off/screen/add_comp_off.dart';
@@ -49,6 +50,7 @@ class _CompOffHistoryScreenState extends State<CompOffHistoryScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
+        bottomNavigationBar: bottomBarIos(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

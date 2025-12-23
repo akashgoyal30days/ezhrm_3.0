@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Authentication/User Information/user_details.dart';
@@ -100,6 +101,7 @@ class _LeaveQuotaScreenState extends State<LeaveQuotaScreen> {
         ),
       ],
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,

@@ -2,6 +2,7 @@ import 'dart:async';
 // Import for jsonDecode
 
 import 'package:camera/camera.dart';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
@@ -356,6 +357,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
       ],
       child: Scaffold(
         backgroundColor: Colors.white,
+        bottomNavigationBar: bottomBarIos(),
         body: SafeArea(
           child: Column(
             children: [

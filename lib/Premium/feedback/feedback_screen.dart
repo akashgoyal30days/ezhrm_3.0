@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,7 @@ import '../SessionHandling/session_bloc.dart';
 import '../SideMenuBar/screen/sidebar.dart';
 import '../dashboard/location_service.dart';
 import '../dashboard/screen/dashboard.dart';
+import 'bloc/feedback_bloc.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
@@ -20,275 +22,185 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
-  int _selectedEmojiIndex = -1;
-  final List<String> _issues = [
-    'App Crashed & Freezing',
-    'Poor Photo Quality',
-    'GPS Tracking Issues',
-    'Slow Performance',
-    'Other',
-  ];
-  final Set<String> _selectedIssues = {'Other'};
-  bool _needQuickSupport = true;
   final TextEditingController _commentController = TextEditingController();
+  bool _isSubmitting = false;
 
-  final List<String> emojiList = ['🥶', '😠', '😐', '😄', '😍'];
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<SessionBloc, SessionState>(
-          listener: (context, state) {
-            if (state is SessionExpiredState || state is UserNotFoundState) {
-              // Clear credentials
-              getIt<UserSession>().clearUserCredentials();
-              getIt<UserDetails>().clearUserDetails();
+    return BlocProvider(
+      create: (context) => getIt<FeedbackBloc>(),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<SessionBloc, SessionState>(
+            listener: (context, state) {
+              if (state is SessionExpiredState || state is UserNotFoundState) {
+                getIt<UserSession>().clearUserCredentials();
+                getIt<UserDetails>().clearUserDetails();
 
-              // Navigate to login
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Session expired. Please login again.'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(
-                      userSession: getIt<UserSession>(),
-                      userDetails: getIt<UserDetails>(),
-                      apiUrlConfig: getIt<ApiUrlConfig>(),
-                    ),
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Session expired. Please login again.'),
+                    backgroundColor: Colors.red,
                   ),
-                  (route) => false,
                 );
-              });
-            }
-          },
-        ),
-        BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is LogoutSuccess) {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Logged out successfully.'),
-                  backgroundColor: Color(0xFF416CAF),
-                ),
-              );
 
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(
-                      userSession: getIt<UserSession>(),
-                      userDetails: getIt<UserDetails>(),
-                      apiUrlConfig: getIt<ApiUrlConfig>(),
+                Future.delayed(const Duration(seconds: 2), () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(
+                        userSession: getIt<UserSession>(),
+                        userDetails: getIt<UserDetails>(),
+                        apiUrlConfig: getIt<ApiUrlConfig>(),
+                      ),
                     ),
-                  ),
-                  (route) => false,
-                );
-              });
-            } else if (state is LogoutFailure) {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Error logging out.'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Feedback', style: TextStyle(color: Colors.black)),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.chevron_left, color: Colors.black),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                          userSession: getIt<UserSession>(),
-                          userDetails: getIt<UserDetails>(),
-                          apiUrlConfig: getIt<ApiUrlConfig>(),
-                          locationService: getIt<LocationService>(),
-                        )),
-                (route) => false,
-              );
+                        (route) => false,
+                  );
+                });
+              }
             },
           ),
-          actions: [
-            Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                color: Colors.black,
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
+        ],
+        child: Scaffold(
+          bottomNavigationBar: bottomBarIos(),
+          appBar: AppBar(
+            title: const Text('Feedback', style: TextStyle(color: Colors.black)),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.chevron_left, color: Colors.black),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(
+                      userSession: getIt<UserSession>(),
+                      userDetails: getIt<UserDetails>(),
+                      apiUrlConfig: getIt<ApiUrlConfig>(),
+                      locationService: getIt<LocationService>(),
+                    ),
+                  ),
+                      (route) => false,
+                );
+              },
             ),
-          ],
-        ),
-        drawer: const CustomSidebar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: SingleChildScrollView(
+            actions: [
+              Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.black),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+              ),
+            ],
+          ),
+          drawer: const CustomSidebar(),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Share your feedback',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 4),
-                const Text('Rate your experience',
-                    style: TextStyle(color: Colors.grey)),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(emojiList.length, (index) {
-                    final isSelected = _selectedEmojiIndex == index;
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedEmojiIndex = index;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          border: isSelected
-                              ? Border.all(color: Colors.blue, width: 2)
-                              : Border.all(
-                                  color: Colors.grey.shade300,
-                                  width: 1.5,
-                                ),
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.white,
+                const Text(
+                  'Share your feedback',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 16),
+
+                // TextField with max 3 lines
+                TextField(
+                  controller: _commentController,
+                  maxLines: 3,
+                  minLines: 3, // Ensures it starts with 3 visible lines
+                  textAlignVertical: TextAlignVertical.top,
+                  decoration: const InputDecoration(
+                    hintText: 'Describe your experience or issue here...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    contentPadding: EdgeInsets.all(16),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Submit Button directly below the text field
+                BlocConsumer<FeedbackBloc, FeedbackState>(
+                  listener: (context, state) {
+                    if (state is FeedbackSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Feedback submitted successfully!'),
+                          backgroundColor: Colors.green,
                         ),
-                        child: Text(emojiList[index],
-                            style: const TextStyle(fontSize: 24)),
+                      );
+                      _commentController.clear();
+                    } else if (state is FeedbackError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.error),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    _isSubmitting = state is FeedbackLoading;
+
+                    return SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _isSubmitting
+                            ? null
+                            : () {
+                          final feedbackText = _commentController.text.trim();
+                          if (feedbackText.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please write your feedback before submitting.'),
+                                backgroundColor: Colors.orange,
+                              ),
+                            );
+                            return;
+                          }
+
+                          context.read<FeedbackBloc>().add(
+                            FeedbackActivity(feedback_text: feedbackText),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: const Color(0xFF2196F3),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: _isSubmitting
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : const Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     );
-                  }),
-                ),
-                const SizedBox(height: 15),
-                const Text('Select the issues you’ve experienced',
-                    style: TextStyle(color: Colors.grey)),
-                const SizedBox(height: 10),
-                ..._issues.map((issue) {
-                  final isChecked = _selectedIssues.contains(issue);
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isChecked ? Colors.blue : Colors.grey.shade300,
-                        width: 1.5,
-                      ),
-                    ),
-                    child: CheckboxListTile(
-                      title: Text(issue,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500)),
-                      value: isChecked,
-                      activeColor: Colors.blue,
-                      onChanged: (_) {
-                        setState(() {
-                          if (isChecked) {
-                            _selectedIssues.remove(issue);
-                          } else {
-                            _selectedIssues.add(issue);
-                          }
-                        });
-                      },
-                      controlAffinity: ListTileControlAffinity.leading,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                  );
-                }),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Your Comment',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600)),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _needQuickSupport,
-                          activeColor: Colors.blue,
-                          onChanged: (value) {
-                            setState(() {
-                              _needQuickSupport = value ?? false;
-                            });
-                          },
-                        ),
-                        const Text('Need Quick Support'),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: TextField(
-                    controller: _commentController,
-                    maxLines: 4,
-                    decoration: const InputDecoration(
-                      hintText: 'Describe your experience here',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(12),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () {
-                    // Submit logic
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Feedback submitted successfully')));
-                    _commentController.clear();
-                    setState(() {
-                      _selectedIssues.clear();
-                      _selectedIssues.add("Other");
-                      _needQuickSupport = true;
-                      _selectedEmojiIndex = 4;
-                    });
                   },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF2196F3), Color(0xFF0D47A1)],
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text('Submit',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600)),
-                    ),
-                  ),
                 ),
+
+                // Optional extra space at bottom for better scrolling on small screens
+                const SizedBox(height: 20),
               ],
             ),
           ),

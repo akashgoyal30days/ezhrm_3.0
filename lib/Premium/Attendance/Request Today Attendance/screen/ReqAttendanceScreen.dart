@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
@@ -283,6 +284,7 @@ class _RequestAttendanceScreenState extends State<RequestAttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: bottomBarIos(),
       body: SafeArea(
         child: MultiBlocListener(
           listeners: [
@@ -481,15 +483,20 @@ class _RequestAttendanceScreenState extends State<RequestAttendanceScreen> {
               ),
               const SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Icon(Icons.location_on, color: Colors.grey),
-                const SizedBox(width: 4),
-                Flexible(
-                    child: Text('Location: $_currentAddress',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: Colors.black54),
-                        textAlign: TextAlign.center)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment:CrossAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.location_on, color: Colors.grey),
+                    const SizedBox(width: 4),
+                  ],
+                ),
+                Flexible(child: Text('Location: $_currentAddress',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: Colors.black54),
+                    textAlign: TextAlign.center))
               ]),
               const SizedBox(height: 16),
               Padding(

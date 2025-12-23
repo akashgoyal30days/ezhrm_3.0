@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -97,6 +98,7 @@ class ContactUsScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.chevron_left, color: Colors.black),

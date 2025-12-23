@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
@@ -175,6 +176,7 @@ class _UploadDocumentScreenContentState
         ),
       ],
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         appBar: AppBar(
           title: const Text('Upload Document',
               style: TextStyle(

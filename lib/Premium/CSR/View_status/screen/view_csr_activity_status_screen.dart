@@ -1,4 +1,5 @@
 import 'package:ezhrm/Premium/CSR/View_status/screen/view_csr_activity_status_detail_screen.dart';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -57,6 +58,7 @@ class _ViewCsrActivityStatusScreenState
         ),
       ],
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         appBar: AppBar(
           centerTitle: true,
           leading: IconButton(

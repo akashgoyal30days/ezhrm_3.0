@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../SideMenuBar/screen/sidebar.dart';
@@ -125,6 +126,7 @@ class _AdvanceSalaryScreenState extends State<AdvanceSalaryScreen> {
           return false; // Prevent default back navigation
         },
         child: Scaffold(
+          bottomNavigationBar: bottomBarIos(),
           appBar: AppBar(
             title: const Text(
               "Advance Salary History",

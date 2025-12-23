@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:ezhrm/Premium/Policy/screen/policy_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,6 +127,7 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                   color: Colors.white,
                   // padding: EdgeInsets.only(top: 30.0),
                   child: Scaffold(
+                    bottomNavigationBar: bottomBarIos(),
                     appBar: AppBar(
                       title: const Text(
                         "Policies",

@@ -1,5 +1,6 @@
 // 📁 payslip_view_screen.dart
 
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -15,6 +16,7 @@ class PayslipViewScreen extends StatelessWidget {
       ..loadHtmlString(htmlContent);
 
     return Scaffold(
+      bottomNavigationBar: bottomBarIos(),
       appBar: AppBar(
         title: const Text("Salary Slip"),
         backgroundColor: Colors.blue.shade700,

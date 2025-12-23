@@ -1,4 +1,5 @@
 import 'package:ezhrm/Premium/CSR/view%20activity/screen/view_csr_detail_screen.dart';
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -91,6 +92,7 @@ class ViewCsrActivityScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        bottomNavigationBar: bottomBarIos(),
         appBar: AppBar(
           // or any CSR theme color
           // elevation: 4,

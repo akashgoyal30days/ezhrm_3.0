@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/Configuration/premium_bottom_bar_ios.dart';
 import 'package:ezhrm/Premium/work%20from%20home/screen/work_from_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +109,7 @@ class WorkFromHomeScreen extends StatelessWidget {
             ),
           ],
           child: Scaffold(
+            bottomNavigationBar: bottomBarIos(),
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: const Text(
