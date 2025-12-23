@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
@@ -7,8 +7,6 @@ import 'Premium/Authentication/User Information/user_session.dart';
 import 'Premium/Configuration/ApiUrlConfig.dart';
 import 'Premium/Dependency_Injection/dependency_injection.dart';
 import 'Premium/dashboard/location_service.dart';
-import 'Premium/fcm_service.dart';
-import 'Premium/notification.dart';
 import 'Premium/splash_screen.dart';
 
 class NewAppEntry extends StatefulWidget {
@@ -28,21 +26,7 @@ class _NewAppEntryState extends State<NewAppEntry> {
   }
 
   Future<void> _initializeNewApp() async {
-    // 1. Firebase
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp();
-      print('Firebase initialized');
-    } else {
-      print('Firebase already initialized');
-    }
 
-    // 2. FCM
-    await FcmService.initialize();
-
-    // 3. Local Notifications
-    await initializeNotifications();
-
-    // 4. Dependency Injection
     if (!getIt.isRegistered<ApiUrlConfig>()) {
       print('Registering dependencies...');
       setupDependencies(); // This now has a guard inside
@@ -50,7 +34,6 @@ class _NewAppEntryState extends State<NewAppEntry> {
       print('Dependencies already registered — skipping');
     }
 
-    // 5. Workmanager (smart one-time init)
     final prefs = await SharedPreferences.getInstance();
     bool isWorkmanagerInitialized =
         prefs.getBool('workmanager_initialized') ?? false;

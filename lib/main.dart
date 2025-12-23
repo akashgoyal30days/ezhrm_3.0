@@ -2,11 +2,14 @@ import 'package:ezhrm/premium_app_entry.dart';
 import 'package:ezhrm/standard_app_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'Premium/fcm_service.dart';
+import 'Premium/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Premium/Dependency_Injection/dependency_injection.dart';
 import 'Premium/premium_version_routes.dart';
 import 'Premium/premium_version_theme.dart';
 import 'app_selector_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'Premium/Documents/Get Document Type/bloc/get_document_type_bloc.dart';
 import 'Premium/Documents/upload_documents/bloc/upload_documents_bloc.dart';
 import 'Premium/Documents/view_documents/bloc/view_doucments_bloc.dart';
@@ -51,8 +54,22 @@ import 'Premium/CSR/post activity/bloc/post_csr_activity_bloc.dart';
 import 'Premium/Comp off/add comp off/bloc/add_comp_off_bloc.dart';
 import 'Premium/Comp off/show_comp_off/bloc/show_comp_off_bloc.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // 1. Start Firebase init (often the slowest)
+  await Firebase.initializeApp();
+
+  // 2. Start FCM init in parallel
+  final fcmFuture = FcmService.initialize();
+
+  // 3. Local notifications in parallel
+  final notificationsFuture = initializeNotifications();
+
+  // Await all parallels at once
+  await Future.wait([
+    fcmFuture,
+    notificationsFuture,
+  ]);
   runApp(const AppRouter());
 }
 
