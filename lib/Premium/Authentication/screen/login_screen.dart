@@ -493,6 +493,20 @@ class _LoginscreenState extends State<LoginScreen> {
                                             );
                                             return;
                                           }
+
+                                          final bool? userConsented = await showDialog<bool>(
+                                            context: context,
+                                            barrierDismissible: false, // User must tap a button
+                                            builder: (BuildContext context) {
+                                              return const DataUsageDialog();
+                                            },
+                                          );
+
+                                          // If user did NOT tap "Continue" (i.e., tapped Cancel or dismissed), abort login
+                                          if (userConsented != true) {
+                                            return; // Do nothing, stay on login screen
+                                          }
+
                                           final deviceId =
                                               await ensureDeviceId();
                                           getIt<AuthBloc>().add(LoginSubmitted(
@@ -739,6 +753,74 @@ class _CustomInputCardState extends State<CustomInputCard> {
               vertical: 10,
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class DataUsageDialog extends StatelessWidget {
+  const DataUsageDialog({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+      title: const Text(
+        "Attention",
+        style: TextStyle(
+            color: Color(0xff072a99),
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
+            fontSize: 20),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+              textAlign: TextAlign.start,
+              text: const TextSpan(
+                  style: TextStyle(fontSize: 18, color: Colors.black, fontFamily: 'Poppins'),
+                  children: [
+                    TextSpan(text: "EZHRM collects ", style: TextStyle(fontFamily: 'Poppins',)),
+                    TextSpan(
+                        text: "location data ",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Poppins',)),
+                    TextSpan(
+                        text: "to enable attendance marking and customer visit tracking even when the ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                    TextSpan(text: "app is closed or not in use. ", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "This data is also collected when the app is running in the ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                    TextSpan(text: "background ", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: "to ensure accurate visit logs during your working hours. ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                    TextSpan(
+                        text: "This tracking is based on your employer's configuration. You can stop tracking by logging out or revoking permissions.",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                  ])),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          style:
+          ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.red)),
+          child: const Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+          style: ButtonStyle(
+              foregroundColor:
+              WidgetStateProperty.all(const Color(0xff072a99))),
+          child: const Text("Continue"),
         ),
       ],
     );

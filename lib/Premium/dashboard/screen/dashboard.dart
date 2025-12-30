@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../../premium_app_entry.dart';
 import '../../Attendance/Attendance history/screen/attendance_history_screen.dart';
 import '../../Attendance/mark attendance/screen/mark_attendance_screen.dart';
@@ -133,6 +138,221 @@ class _HomeScreenState extends State<HomeScreen>
 
     _initialize();
     debugPrint("🚀 _initialize() called");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      debugPrint("📱 HomeScreen fully built - checking for background location dialog");
+
+      final prefs = await SharedPreferences.getInstance();
+      final showDialogFlag = prefs.getString("show_bg_dialog");
+
+      // Show only if the key is NOT set to "false" (i.e., first time or reset)
+      if (showDialogFlag != "false") {
+        debugPrint("🚨 Showing background location tracking disclosure dialog");
+        await showLocationTrackingDialog();  // Your existing method
+      } else {
+        debugPrint("⏭️ Skipping background location dialog (already shown or dismissed)");
+      }
+    });
+  }
+
+  showLocationTrackingDialog() async {
+    await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async {
+              return false;
+            },
+            child: CupertinoAlertDialog(
+              title: const Text("This app collects location data to enable", style: TextStyle(fontFamily: 'Poppins',),),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("- Location Based Attendance Marking", style: TextStyle(fontFamily: 'Poppins'), textAlign: TextAlign.left,),
+                  const Text(
+                    "- Employer/Company can track your live location",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontFamily: 'Poppins',),
+                  ),
+                  const Text(
+                      "- To Check and approve your travel allowances even when the app is closed or not in use",
+                      textAlign: TextAlign.left,
+                      style : TextStyle(fontFamily: 'Poppins',)
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Do you want to allow?",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontFamily: 'Poppins',),
+                  ),
+                  RichText(
+                      text: TextSpan(
+                          style: const TextStyle(color: Colors.black),
+                          children: [
+                            const TextSpan(text: "Click ", style: TextStyle(fontFamily: 'Poppins',)),
+                            TextSpan(
+                                text: "here ",
+                                style: const TextStyle(color: Colors.blue, fontFamily: 'Poppins',),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launch("https://ezhrm.in/locationpolicy");
+                                  }),
+                            const TextSpan(text: "for details", style: TextStyle(fontFamily: 'Poppins',)),
+                          ])),
+                ],
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text("Allow", style : TextStyle(fontFamily: 'Poppins',)),
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString("show_bg_dialog", "true");
+                    Navigator.pop(context);
+                    await showLocationTrackingConditions();
+
+                    if (mounted) {
+                      await _checkAndRequestPermissions();
+                    }
+                  },
+                ),
+                CupertinoDialogAction(
+                  onPressed: (){
+                    Navigator.pop(context);
+
+                    SystemNavigator.pop();
+                  },
+                  child: const Text("Exit", style: TextStyle(fontFamily: 'Poppins',),),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  showLocationTrackingConditions() async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return WillPopScope(
+              onWillPop: () async {
+                return false;
+              },
+              child: AlertDialog(
+                backgroundColor: Colors.white,
+                insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+                title: Row(
+                  children: const [
+                    Text(
+                      "Attention",
+                      style: TextStyle(
+                          color: Color(0xff072a99),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
+                          fontSize: 20),
+                    ),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("For Background Location Tracking : ",
+                        style: TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w500, fontFamily: 'Poppins',)),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0xFF072a99)),
+                        ),
+                        const SizedBox(width: 15),
+                        const Expanded(
+                          child: Text(
+                              "Please, Keep your battery Save Mode Disable",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                              )),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0xff072a99)),
+                        ),
+                        const SizedBox(width: 15),
+                        const Expanded(
+                          child:
+                          Text("Please Allow the app to Run in Background",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                              )),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0xff072a99)),
+                        ),
+                        const SizedBox(width: 15),
+                        const Expanded(
+                          child: Text("Keep Your Phone GPS Enabled ",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                              )),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0xff072a99)),
+                        ),
+                        const SizedBox(width: 15),
+                        const Expanded(
+                          child: Text(
+                              "Please, Make sure your Internet Connection is active ",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                              )),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                        foregroundColor:
+                        WidgetStateProperty.all(const Color(0xff072a99))),
+                    child: const Text("OKAY", style : TextStyle(fontFamily: 'Poppins',)),
+                  ),
+                ],
+              ));
+        });
   }
 
   Future<void> _initializeUserData() async {
@@ -207,10 +427,6 @@ class _HomeScreenState extends State<HomeScreen>
       // Step 3: Initialize notifications
       await _initializeNotifications();
       print('HRMDashboard: Completed _initializeNotifications');
-
-      // Step 4: Check and request permissions
-      await _checkAndRequestPermissions();
-      print('HRMDashboard: Completed _checkAndRequestPermissions');
     } catch (e, stackTrace) {
       print('HRMDashboard: Error during initialization: $e');
       print('HRMDashboard: StackTrace: $stackTrace');
@@ -981,7 +1197,7 @@ class _HomeScreenState extends State<HomeScreen>
             print('HRMDashboard: Location permission denied');
             _showPermissionDialog(
               'Location Permission',
-              'Please allow location access to "Always" to proceed.',
+              'Please allow location access to "Allow all the time" for marking attendance.',
               onContinue: () async {
                 await widget.userDetails.setLocationPermission(false);
                 print(

@@ -51,12 +51,9 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
       NotificationService().init();
 
       if (goGreenModel!.backgroundLocationTrackingEnabled!) {
-        debugPrint('In the bottom home navigation bar file, background location tracking is enabled');
-        final prefs = await SharedPreferences.getInstance();
-        var show = prefs.getString("ulocat");
-        var locTrack = prefs.getString("locate");
-        debugPrint('gps location permission is $show and location tracking is $locTrack');
-        if (show.toString() == "1" && locTrack.toString() == '1') {
+        var show =
+        SharedPreferencesInstance.getString("ShowBackgroundLocationDailog");
+        if (show.toString() == "true") {
           Future.delayed(const Duration(seconds: 1), () {
             if (Platform.isAndroid) {
               showLocationTrackingDialog();
@@ -292,25 +289,6 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
                                   style: TextStyle(
                                     fontSize: 15,
                                   )),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Container(
-                          height: 15,
-                          width: 15,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: themecolor),
-                        ),
-                        const SizedBox(width: 15),
-                        const Expanded(
-                          child: Text(
-                              "Do not Remove your app from Recent Activity",
-                              style: TextStyle(
-                                fontSize: 15,
-                              )),
                         ),
                       ],
                     ),

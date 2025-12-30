@@ -969,49 +969,36 @@ class DataUsageDialog extends StatelessWidget {
         style: TextStyle(
             color: Color(0xff072a99),
             fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
             fontSize: 20),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("By continuing to the app, you agree that:",
-              style: TextStyle(
-                fontSize: 18,
-              )),
-          const SizedBox(height: 10),
           RichText(
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.start,
               text: const TextSpan(
-                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  style: TextStyle(fontSize: 18, color: Colors.black, fontFamily: 'Poppins'),
                   children: [
-                    TextSpan(text: "Your "),
+                    TextSpan(text: "EZHRM collects ", style: TextStyle(fontFamily: 'Poppins',)),
                     TextSpan(
-                        text: "location ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "may be tracked in "),
+                        text: "location data ",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Poppins',)),
                     TextSpan(
-                        text: "background ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "for "),
+                        text: "to enable attendance marking and customer visit tracking even when the ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                    TextSpan(text: "app is closed or not in use. ", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
                     TextSpan(
-                        text: "marking your attendance ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "and "),
+                        text: "This data is also collected when the app is running in the ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
+                    TextSpan(text: "background ", style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
                     TextSpan(
-                        text: "tracking your customer visits ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "during your working hours, only "),
+                        text: "to ensure accurate visit logs during your working hours. ",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
                     TextSpan(
-                        text: "when the app is running, ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "as "),
-                    TextSpan(
-                        text: "Agreed between you and your employer. ",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(
-                        text:
-                            "To stop your location tracking, please exit or logout from the app."),
+                        text: "This tracking is based on your employer's configuration. You can stop tracking by logging out or revoking permissions.",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Poppins',)),
                   ])),
         ],
       ),
@@ -1019,7 +1006,7 @@ class DataUsageDialog extends StatelessWidget {
         TextButton(
           onPressed: Navigator.of(context).pop,
           style:
-              ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.red)),
+          ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.red)),
           child: const Text("Cancel"),
         ),
         TextButton(
@@ -1028,7 +1015,7 @@ class DataUsageDialog extends StatelessWidget {
           },
           style: ButtonStyle(
               foregroundColor:
-                  WidgetStateProperty.all(const Color(0xff072a99))),
+              WidgetStateProperty.all(const Color(0xff072a99))),
           child: const Text("Continue"),
         ),
       ],
