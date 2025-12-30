@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../premium_app_entry.dart';
@@ -1181,7 +1182,8 @@ class _HomeScreenState extends State<HomeScreen>
           });
           await _initializeService();
           print('HRMDashboard: Completed _initializeService');
-        } else {
+        }
+        else {
           print('HRMDashboard: Location permission not granted, requesting...');
           final locationStatus = await Permission.locationAlways.request();
           if (locationStatus.isGranted) {
@@ -1214,6 +1216,22 @@ class _HomeScreenState extends State<HomeScreen>
             return;
           }
         }
+
+        var locationEnabled = await Geolocator.isLocationServiceEnabled();
+        if (!locationEnabled) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Please Turn your GPS ON",
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.red,
+          ));
+        }
+
+        debugPrint('HRMDashboard: Starting location service & permission check...');
+        await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
 
         // Camera permission handling (same as before)
         final cameraStatus = await Permission.camera.status;
@@ -1260,6 +1278,20 @@ class _HomeScreenState extends State<HomeScreen>
       }
     } catch (e) {
       print('HRMDashboard: Error checking permissions: $e');
+
+      if(e.toString() == 'The location service on the device is disabled.'  || e.toString() == "User denied permissions to access the device's location."){
+        _showPermissionDialog(
+          'Location Service',
+          'Please grant location service to mark attendance and location tracking.',
+          onContinue: () async {
+            print('HRMDashboard: Location tracking disabled due to user continuing without location service');
+          },
+          onOpenSettings: () async {
+            bool opened = await Geolocator.openLocationSettings();
+            debugPrint('Location settings opened: $opened');
+          },
+        );
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error checking permissions: $e')),
       );
@@ -1289,6 +1321,38 @@ class _HomeScreenState extends State<HomeScreen>
     print('DashboardScreen: Notification sent');
   }
 
+  void _showLocationServiceDialog({
+    required String title,
+    required String message,
+    required VoidCallback onEnable,
+    required VoidCallback onCancel,
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              onCancel();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              onEnable();
+            },
+            child: const Text('Turn On'),
+          ),
+        ],
+      ),
+    );
+  }
+
   // Show permission dialog
   void _showPermissionDialog(
     String title,
@@ -1301,6 +1365,7 @@ class _HomeScreenState extends State<HomeScreen>
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text(title),
+        backgroundColor: Colors.white,
         content: Text(message),
         actions: [
           TextButton(
