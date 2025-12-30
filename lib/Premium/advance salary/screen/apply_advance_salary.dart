@@ -170,19 +170,22 @@ class _ApplyAdvanceSalaryState extends State<ApplyAdvanceSalary> {
           listener: (context, state) {
             if (state is AdvanceSalarySuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message), backgroundColor: Colors.green),
+                SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.green),
               );
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
                         AdvanceSalaryScreen()), // route name from your routes table
-                    (Route<dynamic> route) =>
-                false, // removes all previous routes
+                (Route<dynamic> route) => false, // removes all previous routes
               );
             } else if (state is AdvanceSalaryFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage), backgroundColor: Colors.red),
+                SnackBar(
+                    content: Text(state.errorMessage),
+                    backgroundColor: Colors.red),
               );
             }
           },

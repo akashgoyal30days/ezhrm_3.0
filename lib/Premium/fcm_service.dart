@@ -10,20 +10,17 @@ class FcmService {
   static Future<void> initialize() async {
     UserDetails userDetails = UserDetails();
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-
     // Request notification permissions (required for iOS, recommended for Android)
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
-
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted notification permission');
     } else {
       print('User declined or has not granted permission');
     }
-
     // Get the FCM token
     String? token = await messaging.getToken();
     if (token != null) {
@@ -36,7 +33,6 @@ class FcmService {
     } else {
       print('Failed to get FCM token');
     }
-
     // Handle token refresh (e.g., if Firebase issues a new token)
     messaging.onTokenRefresh.listen((newToken) async {
       print('Refreshed FCM Token: $newToken');
@@ -44,7 +40,6 @@ class FcmService {
       // await sendTokenToServer(newToken, 'user123'); // Replace 'user123' with actual user ID
     });
   }
-
   // Send FCM token to your Laravel server
   static Future<void> sendTokenToServer(String token, String userId) async {
     try {

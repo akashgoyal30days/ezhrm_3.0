@@ -25,7 +25,7 @@ class _SplashScreenState extends State<StandardSplashScreen> {
   @override
   void initState() {
     super.initState();
-    // checkdevicerooted();
+    checkdevicerooted();
   }
 
   String? appsign;

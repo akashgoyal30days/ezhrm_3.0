@@ -44,14 +44,19 @@ class _OldAppEntryState extends State<OldAppEntry> {
     HttpOverrides.global = MyHttpOverrides();
 
     try {
-      await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-      print("Workmanager initialized (Old App)");
+      if (Platform.isAndroid) {
+        await Workmanager()
+            .initialize(callbackDispatcher, isInDebugMode: false);
+
+        print("Workmanager initialized (Old App)");
+      }
     } catch (e) {
       print("Workmanager failed: $e");
     }
 
     if (mounted) {
       setState(() => _initialized = true);
+      print("setstate iniitiialized true");
     }
   }
 

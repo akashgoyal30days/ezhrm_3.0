@@ -57,19 +57,22 @@ import 'Premium/Comp off/show_comp_off/bloc/show_comp_off_bloc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 1. Start Firebase init (often the slowest)
-  await Firebase.initializeApp();
-
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {}
   // 2. Start FCM init in parallel
-  final fcmFuture = FcmService.initialize();
-
+  try {
+    final fcmFuture = FcmService.initialize();
+  } catch (e) {}
   // 3. Local notifications in parallel
-  final notificationsFuture = initializeNotifications();
-
+  try {
+    final notificationsFuture = initializeNotifications();
+  } catch (e) {}
   // Await all parallels at once
-  await Future.wait([
-    fcmFuture,
-    notificationsFuture,
-  ]);
+  // await Future.wait([
+  //   fcmFuture,
+  //   notificationsFuture,
+  // ]);
   runApp(const AppRouter());
 }
 
