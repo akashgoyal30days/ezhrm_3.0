@@ -22,12 +22,6 @@ android {
     buildFeatures {
         prefab true
     }
-    bundle {
-        // This forces Flutter to generate real APK files again for debug/run
-        abi {
-            enableSplit = false   // ← disables split APKs (optional but cleaner)
-        }
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
