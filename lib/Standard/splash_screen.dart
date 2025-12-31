@@ -2,12 +2,11 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_jailbreak_detection_plus/flutter_jailbreak_detection_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:minimize_flutter_app/minimize_flutter_app.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-// import 'package:root_tester/root_tester.dart';
+import 'package:safe_device/safe_device.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../standard_app_entry.dart';
 import 'home_bottom_navigation_bar.dart';
@@ -32,10 +31,11 @@ class _SplashScreenState extends State<StandardSplashScreen> {
   checkdevicerooted() async {
     bool isRooted;
     try {
-      isRooted = await FlutterJailbreakDetectionPlus.jailbroken;
+      isRooted = await SafeDevice.isJailBroken;
     } on PlatformException {
       isRooted = false;
     }
+
     if (isRooted == true) {
       Fluttertoast.showToast(
           msg: "Device is Rooted, You Can't Use this Application",
@@ -48,7 +48,6 @@ class _SplashScreenState extends State<StandardSplashScreen> {
     } else {
       movetonextscreen();
       // appsign = await verifyAppSignature();
-
       // setState(() {});
       // if (appsign == "cedf08356571bfa935778c183440b9048ca51dd4") {
       //   movetonextscreen();

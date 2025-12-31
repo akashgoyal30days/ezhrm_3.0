@@ -71,8 +71,6 @@ class _OldAppEntryState extends State<OldAppEntry> {
 }
 
 initializeApp() async {
-  // await Firebase.initializeApp();
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

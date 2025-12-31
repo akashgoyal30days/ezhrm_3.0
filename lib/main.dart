@@ -1,3 +1,4 @@
+import 'package:ezhrm/Premium/firebase_options.dart';
 import 'package:ezhrm/premium_app_entry.dart';
 import 'package:ezhrm/standard_app_entry.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 1. Start Firebase init (often the slowest)
   try {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   } catch (e) {}
   // 2. Start FCM init in parallel
   try {
