@@ -212,9 +212,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -245,9 +249,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -390,7 +398,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7SYF462CS7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.4.4;
+				FLUTTER_BUILD_NAME = 2.4.5;
 				FLUTTER_BUILD_NUMBER = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,7 +416,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = in.u30days.ezhrm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -541,7 +549,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7SYF462CS7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.4.4;
+				FLUTTER_BUILD_NAME = 2.4.5;
 				FLUTTER_BUILD_NUMBER = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -559,7 +567,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = in.u30days.ezhrm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -585,7 +593,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7SYF462CS7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.4.4;
+				FLUTTER_BUILD_NAME = 2.4.5;
 				FLUTTER_BUILD_NUMBER = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -603,7 +611,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = in.u30days.ezhrm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
