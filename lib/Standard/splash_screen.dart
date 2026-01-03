@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -29,58 +30,44 @@ class _SplashScreenState extends State<StandardSplashScreen> {
 
   String? appsign;
   checkdevicerooted() async {
-    bool isRooted;
-    try {
-      isRooted = await SafeDevice.isJailBroken;
-    } on PlatformException {
-      isRooted = false;
-    }
+    if (kReleaseMode) {
+      bool isRooted;
+      try {
+        isRooted = await SafeDevice.isJailBroken;
+      } on PlatformException {
+        isRooted = false;
+      }
 
-    if (isRooted == true) {
-      Fluttertoast.showToast(
-          msg: "Device is Rooted, You Can't Use this Application",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 2,
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-          fontSize: 16.0);
+      if (isRooted == true) {
+        Fluttertoast.showToast(
+            msg: "Device is Rooted, You Can't Use this Application",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      } else {
+        movetonextscreen();
+        // appsign = await verifyAppSignature();
+        // setState(() {});
+        // if (appsign == "cedf08356571bfa935778c183440b9048ca51dd4") {
+        //   movetonextscreen();
+        // } else {
+        //   Fluttertoast.showToast(
+        //       msg: "This App has been tampered With, app will not run",
+        //       toastLength: Toast.LENGTH_SHORT,
+        //       gravity: ToastGravity.BOTTOM,
+        //       timeInSecForIosWeb: 2,
+        //       backgroundColor: Colors.white,
+        //       textColor: Colors.black,
+        //       fontSize: 16.0);
+        // }
+      }
     } else {
       movetonextscreen();
-      // appsign = await verifyAppSignature();
-      // setState(() {});
-      // if (appsign == "cedf08356571bfa935778c183440b9048ca51dd4") {
-      //   movetonextscreen();
-      // } else {
-      //   Fluttertoast.showToast(
-      //       msg: "This App has been tampered With, app will not run",
-      //       toastLength: Toast.LENGTH_SHORT,
-      //       gravity: ToastGravity.BOTTOM,
-      //       timeInSecForIosWeb: 2,
-      //       backgroundColor: Colors.white,
-      //       textColor: Colors.black,
-      //       fontSize: 16.0);
-      // }
     }
   }
-
-  // checkinternetconnecttion() async {
-  //   log("checking connection...");
-  //   if (Platform.isAndroid) {
-  //     if (await DataConnectionChecker().hasConnection) {
-  //       log("Internet Connected");
-
-  //       movetonextscreen();
-  //     } else {
-  //       log(" No Internet Connection");
-  //       noInternetConnectiondailog();
-  //       setState(() {});
-  //     }
-  //   }
-  //   if (Platform.isIOS) {
-  //     movetonextscreen();
-  //   }
-  // }
 
   noInternetConnectiondailog() {
     return showDialog(

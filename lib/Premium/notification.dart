@@ -1,7 +1,7 @@
+import 'package:ezhrm/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -28,8 +28,17 @@ Future<void> initializeNotifications() async {
     print('⚙️ Initializing local notifications...');
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const DarwinInitializationSettings iosSettings =
+        DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: androidSettings);
+        InitializationSettings(android: androidSettings, iOS: iosSettings);
+
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (response) =>
@@ -47,10 +56,6 @@ Future<void> initializeNotifications() async {
     print('🔒 Requesting notification permission...');
     final settings = await FirebaseMessaging.instance.requestPermission();
     print('✅ Permission status: ${settings.authorizationStatus}');
-
-    final token = await FirebaseMessaging.instance.getToken();
-    print('🎯 FCM Token: $token');
-
     // Foreground message listener
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print('💡 [Foreground] Message received!');

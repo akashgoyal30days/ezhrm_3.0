@@ -1,4 +1,4 @@
-import 'package:ezhrm/Premium/firebase_options.dart';
+import 'package:ezhrm/firebase_options.dart';
 import 'package:ezhrm/premium_app_entry.dart';
 import 'package:ezhrm/standard_app_entry.dart';
 import 'package:flutter/material.dart';
@@ -64,17 +64,14 @@ Future<void> main() async {
   } catch (e) {}
   // 2. Start FCM init in parallel
   try {
-    final fcmFuture = FcmService.initialize();
+    final fcmFuture = await FcmService.initialize();
   } catch (e) {}
   // 3. Local notifications in parallel
   try {
-    final notificationsFuture = initializeNotifications();
+    final notificationsFuture = await initializeNotifications();
   } catch (e) {}
   // Await all parallels at once
-  // await Future.wait([
-  //   fcmFuture,
-  //   notificationsFuture,
-  // ]);
+
   runApp(const AppRouter());
 }
 

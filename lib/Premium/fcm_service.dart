@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,25 +22,31 @@ class FcmService {
     } else {
       print('User declined or has not granted permission');
     }
-    // Get the FCM token
-    String? token = await messaging.getToken();
-    if (token != null) {
-      userDetails.setFcmToken(token);
-      print('FCM Token: $token');
-      String? fcmToken = await userDetails.getFcmToken();
-      print('FCM token saved locally and here is the value: $fcmToken');
-      // Send token to your server
-      // await sendTokenToServer(token, 'user123'); // Replace 'user123' with actual user ID
+
+    if (Platform.isAndroid) {
+      // Get the FCM token
+      String? token = await messaging.getToken();
+      if (token != null) {
+        userDetails.setFcmToken(token);
+        print('FCM Token: $token');
+        String? fcmToken = await userDetails.getFcmToken();
+        print('FCM token saved locally and here is the value: $fcmToken');
+        // Send token to your server
+        // await sendTokenToServer(token, 'user123'); // Replace 'user123' with actual user ID
+      } else {
+        print('Failed to get FCM token');
+      }
+      // Handle token refresh (e.g., if Firebase issues a new token)
+      messaging.onTokenRefresh.listen((newToken) async {
+        print('Refreshed FCM Token: $newToken');
+        // Send new token to your server
+        // await sendTokenToServer(newToken, 'user123'); // Replace 'user123' with actual user ID
+      });
     } else {
-      print('Failed to get FCM token');
+      final apnsToken = await messaging.getAPNSToken();
     }
-    // Handle token refresh (e.g., if Firebase issues a new token)
-    messaging.onTokenRefresh.listen((newToken) async {
-      print('Refreshed FCM Token: $newToken');
-      // Send new token to your server
-      // await sendTokenToServer(newToken, 'user123'); // Replace 'user123' with actual user ID
-    });
   }
+
   // Send FCM token to your Laravel server
   static Future<void> sendTokenToServer(String token, String userId) async {
     try {
